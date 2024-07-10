@@ -7,8 +7,9 @@
 - [x] Tidy up build process
 - [x] Actually set up a database
 - [x] Attach database to UI
-- [ ] Add authentication (w/ Clerk)
+- [x] Add authentication (w/ Clerk)
 - [ ] Add image upload
+- [ ] "Taint" (server-only)
 - [ ] Error management (w/ Sentry)
 - [ ] Routing/iamge page (parallel route)
 - [ ] Delete button (w/ Server Actions)
