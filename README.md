@@ -16,5 +16,6 @@
 - [x] Update upload button
 - [x] ShadUIify (specifically toast)
 - [x] Delete button (w/ Server Actions)
+- [x] Lock uploading
 - [ ] Analytics (w/ Posthog)
 - [ ] Ratelimiting (w/ Upstash)
