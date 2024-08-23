@@ -1,7 +1,7 @@
 import { createStore } from "zustand/vanilla";
 
 export type GalleryState = {
-  images: string[];
+  selectedImages: string[];
 };
 
 export type GalleryActions = {
@@ -13,11 +13,11 @@ export type GalleryActions = {
 export type GalleryStore = GalleryState & GalleryActions;
 
 export const initGalleryStore = (): GalleryState => {
-  return { images: [] };
+  return { selectedImages: [] };
 };
 
 export const defaultInitState: GalleryState = {
-  images: [],
+  selectedImages: [],
 };
 
 export const createGalleryStore = (
@@ -25,9 +25,12 @@ export const createGalleryStore = (
 ) => {
   return createStore<GalleryStore>()((set) => ({
     ...initState,
-    add: (imageId) => set((state) => ({ images: [...state.images, imageId] })),
+    add: (imageId) =>
+      set((state) => ({ selectedImages: [...state.selectedImages, imageId] })),
     remove: (imageId) =>
-      set((state) => ({ images: state.images.filter((id) => id !== imageId) })),
-    clear: () => set({ images: [] }),
+      set((state) => ({
+        selectedImages: state.selectedImages.filter((id) => id !== imageId),
+      })),
+    clear: () => set({ selectedImages: [] }),
   }));
 };

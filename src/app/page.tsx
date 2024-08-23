@@ -1,9 +1,9 @@
 import { SignedIn, SignedOut } from "@clerk/nextjs";
-import { Gallery } from "~/components/gallery";
+import { ImageGallery } from "~/components/gallery";
 
 export const dynamic = "force-dynamic";
 
-export default async function HomePage() {
+export default function HomePage() {
   return (
     <main>
       <SignedOut>
@@ -12,7 +12,7 @@ export default async function HomePage() {
         </div>
       </SignedOut>
       <SignedIn>
-        <Gallery />
+        <ImageGallery />
       </SignedIn>
     </main>
   );

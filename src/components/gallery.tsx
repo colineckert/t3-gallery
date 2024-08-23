@@ -2,7 +2,7 @@ import { getMyImages } from "~/server/queries";
 import Image from "next/image";
 import Link from "next/link";
 
-export async function Gallery() {
+export async function ImageGallery() {
   const images = await getMyImages();
 
   return (
