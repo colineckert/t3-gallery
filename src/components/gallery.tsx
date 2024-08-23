@@ -1,9 +1,15 @@
-import { getMyImages } from "~/server/queries";
-import Image from "next/image";
-import Link from "next/link";
+"use client";
 
-export async function ImageGallery() {
-  const images = await getMyImages();
+import Link from "next/link";
+import Image from "next/image";
+import { useGalleryStore } from "~/providers/gallery-store-provider";
+import { type GalleryImage } from "~/server/db/schema";
+
+export function ImageGallery({ images }: { images: GalleryImage[] }) {
+  const { selectedImages, add, remove, clear } = useGalleryStore(
+    (state) => state,
+  );
+  console.log({ selectedImages, add, remove, clear });
 
   return (
     <div className="flex flex-wrap justify-center gap-4 p-4">
