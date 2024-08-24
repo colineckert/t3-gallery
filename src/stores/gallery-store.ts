@@ -1,12 +1,12 @@
 import { createStore } from "zustand/vanilla";
 
 export type GalleryState = {
-  selectedImages: string[];
+  selectedImages: number[];
 };
 
 export type GalleryActions = {
-  add: (imageId: string) => void;
-  remove: (imageId: string) => void;
+  add: (imageId: number) => void;
+  remove: (imageId: number) => void;
   clear: () => void;
 };
 
