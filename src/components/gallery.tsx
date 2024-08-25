@@ -21,37 +21,35 @@ export function ImageGallery({ images }: { images: GalleryImage[] }) {
 
   return (
     <div className="flex flex-wrap justify-center gap-4 p-4">
-      {[...images, ...images, ...images, ...images, ...images, ...images].map(
-        (image) => (
-          <div
-            key={image.id}
-            className={`flex h-44 w-48 flex-col justify-between rounded-md p-1
+      {images.map((image) => (
+        <div
+          key={image.id}
+          className={`flex h-44 w-48 flex-col justify-between rounded-md p-1
             ${selectedImages.includes(image.id) && "border-2 border-blue-500"}`}
-          >
-            <Link href={`/img/${image.id}`}>
-              <Image
-                src={image.url}
-                alt={image.name}
-                style={{ objectFit: "contain" }}
-                width={192}
-                height={192}
-              />
-            </Link>
-            <Button
-              className="bg-dark text-white hover:bg-white/90 hover:text-slate-950"
-              onClick={() => toggleSelectImage(image.id)}
-            >
-              {image.name}
-            </Button>
-          </div>
-        ),
-      )}
+        >
+          <Link href={`/img/${image.id}`}>
+            <Image
+              src={image.url}
+              alt={image.name}
+              style={{ objectFit: "contain" }}
+              width={192}
+              height={192}
+            />
+          </Link>
+          <Button variant="ghost" onClick={() => toggleSelectImage(image.id)}>
+            {image.name}
+          </Button>
+        </div>
+      ))}
       {selectedImages.length ? (
         <div className="fixed bottom-0 z-10 flex w-full justify-end border-t-2 bg-slate-950 p-3">
           <Button
             variant="destructive"
             onClick={clear}
-          >{`Delete ${selectedImages.length} images`}</Button>
+          >{`Delete ${selectedImages.length} Images`}</Button>
+          <Button className="ml-2" variant="secondary" onClick={clear}>
+            Cancel
+          </Button>
         </div>
       ) : null}
     </div>
