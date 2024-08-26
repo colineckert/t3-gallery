@@ -72,13 +72,17 @@ export function ImageList({ images }: { images: GalleryImage[] | null }) {
               height={192}
             />
           </Link>
-          <Button variant="ghost" onClick={() => toggleSelectImage(image.id)}>
+          <Button
+            size="sm"
+            variant="ghost"
+            onClick={() => toggleSelectImage(image.id)}
+          >
             {image.name}
           </Button>
         </div>
       ))}
       {selectedImages.length ? (
-        <div className="fixed bottom-0 z-10 flex w-full justify-end border-t-2 bg-slate-950 p-3">
+        <div className="fixed bottom-0 left-0 z-10 flex w-full justify-end border-t-2 bg-slate-950 p-3">
           <Button
             variant="destructive"
             onClick={() => handleDeleteImages(selectedImages)}
