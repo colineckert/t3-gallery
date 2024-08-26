@@ -10,6 +10,7 @@ import { extractRouterConfig } from "uploadthing/server";
 import { ourFileRouter } from "./api/uploadthing/core";
 import { Toaster } from "~/components/ui/sonner";
 import { GalleryStoreProvider } from "~/providers/gallery-store-provider";
+import { AlbumSidebar } from "./_components/album-sidebar";
 
 export const metadata = {
   title: "T3 Gallery",
@@ -40,7 +41,10 @@ export default function RootLayout({
           <GalleryStoreProvider>
             <div className="grid h-screen grid-rows-[auto,1fr]">
               <TopNav />
-              <main className="overflow-y-scroll">{children}</main>
+              <div className="flex flex-row">
+                <AlbumSidebar />
+                <main className="overflow-y-scroll">{children}</main>
+              </div>
             </div>
             {modal}
             <div id="modal-root" />
