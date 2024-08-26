@@ -17,7 +17,7 @@
 - [x] ShadUIify (specifically toast)
 - [x] Delete button (w/ Server Actions)
 - [x] Lock uploading
-- [ ] "Selecting" images and bulk delete
+- [x] "Selecting" images and bulk delete
 - [ ] Album support
 - [ ] Analytics (w/ Posthog)
 - [ ] Ratelimiting (w/ Upstash)
