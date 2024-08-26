@@ -19,5 +19,3 @@
 - [x] Lock uploading
 - [x] "Selecting" images and bulk delete
 - [ ] Album support
-- [ ] Analytics (w/ Posthog)
-- [ ] Ratelimiting (w/ Upstash)

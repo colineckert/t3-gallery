@@ -30,9 +30,46 @@ export const images = createTable(
       .notNull(),
     updatedAt: timestamp("updatedAt", { withTimezone: true }),
   },
-  (example) => ({
-    nameIndex: index("name_idx").on(example.name),
+  (image) => ({
+    nameIndex: index("image_name_idx").on(image.name),
   }),
 );
-
 export type GalleryImage = InferSelectModel<typeof images>;
+
+export const albums = createTable(
+  "album",
+  {
+    id: serial("id").primaryKey(),
+    name: varchar("name", { length: 256 }).notNull(),
+    userId: varchar("userId", { length: 256 }).notNull(),
+    createdAt: timestamp("created_at", { withTimezone: true })
+      .default(sql`CURRENT_TIMESTAMP`)
+      .notNull(),
+    updatedAt: timestamp("updatedAt", { withTimezone: true }),
+  },
+  (album) => ({
+    nameIndex: index("album_name_idx").on(album.name),
+  }),
+);
+export type GalleryAlbum = InferSelectModel<typeof albums>;
+
+export const albumImages = createTable(
+  "album_image",
+  {
+    albumId: serial("album_id")
+      .notNull()
+      .references(() => albums.id),
+    imageId: serial("image_id")
+      .notNull()
+      .references(() => images.id),
+    createdAt: timestamp("created_at", { withTimezone: true })
+      .default(sql`CURRENT_TIMESTAMP`)
+      .notNull(),
+  },
+  (albumImage) => ({
+    albumImageIndex: index("album_image_idx").on(
+      albumImage.albumId,
+      albumImage.imageId,
+    ),
+  }),
+);
