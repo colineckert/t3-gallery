@@ -3,13 +3,45 @@
 import Link from "next/link";
 import Image from "next/image";
 import { useGalleryStore } from "~/providers/gallery-store-provider";
-import { type GalleryImage } from "~/server/db/schema";
+import type { GalleryImage } from "~/server/db/schema";
 import { Button } from "./ui/button";
+import { useState } from "react";
+import { toast } from "sonner";
+import { useRouter } from "next/navigation";
 
-export function ImageGallery({ images }: { images: GalleryImage[] }) {
+export function ImageList({ images }: { images: GalleryImage[] | null }) {
+  const router = useRouter();
+  const [loading, setLoading] = useState(false);
   const { selectedImages, add, remove, clear } = useGalleryStore(
     (state) => state,
   );
+
+  async function handleDeleteImages(ids: number[]) {
+    setLoading(true);
+    try {
+      const response = await fetch("/api/delete-images", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ ids }),
+      });
+      if (response.ok) {
+        toast("Images successfully deleted");
+        console.log("Images deleted");
+        clear();
+      } else {
+        toast("Failed to delete images");
+        console.error("Failed to delete images:");
+        clear();
+        router.refresh();
+      }
+    } catch (error) {
+      console.error("Error:", error);
+    } finally {
+      setLoading(false);
+    }
+  }
 
   function toggleSelectImage(id: number) {
     if (selectedImages.includes(id)) {
@@ -17,6 +49,10 @@ export function ImageGallery({ images }: { images: GalleryImage[] }) {
     } else {
       add(id);
     }
+  }
+
+  if (!images || images.length === 0) {
+    return <div>No images to display</div>;
   }
 
   return (
@@ -45,7 +81,8 @@ export function ImageGallery({ images }: { images: GalleryImage[] }) {
         <div className="fixed bottom-0 z-10 flex w-full justify-end border-t-2 bg-slate-950 p-3">
           <Button
             variant="destructive"
-            onClick={clear}
+            onClick={() => handleDeleteImages(selectedImages)}
+            disabled={loading}
           >{`Delete ${selectedImages.length} Images`}</Button>
           <Button className="ml-2" variant="secondary" onClick={clear}>
             Cancel
