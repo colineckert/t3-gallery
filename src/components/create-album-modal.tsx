@@ -1,7 +1,11 @@
+"use client";
+
+import { useState } from "react";
 import { FolderPlus } from "lucide-react";
 import { Button } from "~/components/ui/button";
 import {
   Dialog,
+  DialogClose,
   DialogContent,
   DialogDescription,
   DialogFooter,
@@ -11,8 +15,17 @@ import {
 } from "~/components/ui/dialog";
 import { Input } from "~/components/ui/input";
 import { Label } from "~/components/ui/label";
+import { toast } from "sonner";
+import { useRouter } from "next/navigation";
 
-export function CreateAlbumModal() {
+export function CreateAlbumModal({
+  createAlbum,
+}: {
+  createAlbum: (name: string) => void;
+}) {
+  const router = useRouter();
+  const [albumName, setAlbumName] = useState("Sick Pics");
+
   return (
     <Dialog>
       <DialogTrigger asChild>
@@ -33,11 +46,31 @@ export function CreateAlbumModal() {
             <Label htmlFor="name" className="text-right">
               Name
             </Label>
-            <Input id="name" defaultValue="Sick Pics" className="col-span-3" />
+            <Input
+              id="name"
+              value={albumName}
+              onChange={(e) => setAlbumName(e.target.value)}
+              className="col-span-3"
+            />
           </div>
         </div>
         <DialogFooter>
-          <Button type="submit">Save changes</Button>
+          <DialogClose asChild>
+            <Button
+              type="submit"
+              onClick={() => {
+                try {
+                  createAlbum(albumName);
+                  toast(`${albumName} album created successfully`);
+                  router.refresh();
+                } catch (error) {
+                  console.error("Error:", error);
+                }
+              }}
+            >
+              Save
+            </Button>
+          </DialogClose>
         </DialogFooter>
       </DialogContent>
     </Dialog>
