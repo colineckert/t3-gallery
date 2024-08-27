@@ -17,14 +17,33 @@ import { Input } from "~/components/ui/input";
 import { Label } from "~/components/ui/label";
 import { toast } from "sonner";
 import { useRouter } from "next/navigation";
+import type { GalleryAlbum } from "~/server/db/schema";
 
-export function CreateAlbumModal({
-  createAlbum,
-}: {
-  createAlbum: (name: string) => void;
-}) {
+export function CreateAlbumModal() {
   const router = useRouter();
   const [albumName, setAlbumName] = useState("Sick Pics");
+
+  const createAlbum = async (name: string) => {
+    try {
+      const response = await fetch("/api/create-album", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ name }),
+      });
+
+      if (!response.ok) {
+        throw new Error("Failed to create album");
+      }
+
+      const album = (await response.json()) as GalleryAlbum;
+      return album;
+    } catch (error) {
+      console.error("Error:", error);
+      throw error;
+    }
+  };
 
   return (
     <Dialog>
@@ -58,14 +77,10 @@ export function CreateAlbumModal({
           <DialogClose asChild>
             <Button
               type="submit"
-              onClick={() => {
-                try {
-                  createAlbum(albumName);
-                  toast(`${albumName} album created successfully`);
-                  router.refresh();
-                } catch (error) {
-                  console.error("Error:", error);
-                }
+              onClick={async () => {
+                await createAlbum(albumName);
+                toast(`${albumName} album created successfully`);
+                router.refresh();
               }}
             >
               Save
