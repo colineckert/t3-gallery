@@ -1,3 +1,4 @@
+import Link from "next/link";
 import { auth } from "@clerk/nextjs/server";
 import { CreateAlbumModal } from "~/components/create-album-modal";
 import { Button } from "~/components/ui/button";
@@ -21,8 +22,13 @@ export async function AlbumSidebar() {
       </div>
       <div className="flex flex-col py-3">
         {albums.map((album) => (
-          <Button variant="link" className="justify-start" key={album.id}>
-            {album.name}
+          <Button
+            asChild
+            variant="link"
+            className="justify-start"
+            key={album.id}
+          >
+            <Link href={`/albums/${album.id}`}>{album.name}</Link>
           </Button>
         ))}
       </div>
