@@ -41,7 +41,7 @@ export default function RootLayout({
           <GalleryStoreProvider>
             <div className="grid h-screen grid-rows-[auto,1fr]">
               <TopNav />
-              <div className="flex flex-row">
+              <div className="flex w-full flex-row">
                 <AlbumSidebar />
                 <main className="overflow-y-scroll">{children}</main>
               </div>
