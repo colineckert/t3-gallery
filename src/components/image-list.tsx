@@ -3,13 +3,20 @@
 import Link from "next/link";
 import Image from "next/image";
 import { useGalleryStore } from "~/providers/gallery-store-provider";
-import type { GalleryImage } from "~/server/db/schema";
+import type { GalleryAlbum, GalleryImage } from "~/server/db/schema";
 import { Button } from "./ui/button";
 import { useState } from "react";
 import { toast } from "sonner";
 import { useRouter } from "next/navigation";
+import { AddToAlbumButton } from "./add-album-button";
 
-export function ImageList({ images }: { images: GalleryImage[] | null }) {
+export function ImageList({
+  images,
+  albums,
+}: {
+  images: GalleryImage[] | null;
+  albums: GalleryAlbum[] | null;
+}) {
   const router = useRouter();
   const [loading, setLoading] = useState(false);
   const { selectedImages, add, remove, clear } = useGalleryStore(
@@ -52,7 +59,9 @@ export function ImageList({ images }: { images: GalleryImage[] | null }) {
   }
 
   if (!images || images.length === 0) {
-    return <div>No images to display</div>;
+    return (
+      <div className="flex w-full justify-center p-4">No images to display</div>
+    );
   }
 
   return (
@@ -83,7 +92,7 @@ export function ImageList({ images }: { images: GalleryImage[] | null }) {
       ))}
       {selectedImages.length ? (
         <div className="fixed bottom-0 left-0 z-10 flex w-full justify-end border-t-2 bg-slate-950 p-3">
-          <Button>Add to Album</Button>
+          <AddToAlbumButton albums={albums} imageIds={selectedImages} />
           <Button
             className="ml-2"
             variant="destructive"
