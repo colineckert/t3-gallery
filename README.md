@@ -18,4 +18,4 @@
 - [x] Delete button (w/ Server Actions)
 - [x] Lock uploading
 - [x] "Selecting" images and bulk delete
-- [ ] Album support
+- [ ] Album support (in-progress)

@@ -83,7 +83,9 @@ export function ImageList({ images }: { images: GalleryImage[] | null }) {
       ))}
       {selectedImages.length ? (
         <div className="fixed bottom-0 left-0 z-10 flex w-full justify-end border-t-2 bg-slate-950 p-3">
+          <Button>Add to Album</Button>
           <Button
+            className="ml-2"
             variant="destructive"
             onClick={() => handleDeleteImages(selectedImages)}
             disabled={loading}
