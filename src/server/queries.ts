@@ -69,7 +69,7 @@ export async function getMyAlbums() {
   return albums;
 }
 
-export async function addAlbumImage(albumId: number, imageId: number) {
+export async function addImageToAlbum(albumId: number, imageId: number) {
   const user = auth();
 
   if (!user.userId) throw new Error("Unauthorized");
@@ -78,4 +78,26 @@ export async function addAlbumImage(albumId: number, imageId: number) {
     albumId,
     imageId,
   });
+}
+
+export async function getAlbumImages(albumId: number) {
+  const user = auth();
+
+  if (!user.userId) throw new Error("Unauthorized");
+
+  const imageIds = await db.query.albumImages.findMany({
+    where: (model, { eq }) => eq(model.albumId, albumId),
+  });
+
+  if (!imageIds.length) return [];
+
+  const images = await db.query.images.findMany({
+    where: (model, { inArray }) =>
+      inArray(
+        model.id,
+        imageIds.map((image) => image.imageId),
+      ),
+  });
+
+  return images;
 }
