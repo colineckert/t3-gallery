@@ -14,8 +14,8 @@ export function ImageList({
   images,
   albums,
 }: {
-  images: GalleryImage[] | null;
-  albums: GalleryAlbum[] | null;
+  images: GalleryImage[];
+  albums: GalleryAlbum[];
 }) {
   const router = useRouter();
   const [loading, setLoading] = useState(false);
