@@ -58,10 +58,10 @@ export const albumImages = createTable(
   {
     albumId: serial("album_id")
       .notNull()
-      .references(() => albums.id),
+      .references(() => albums.id, { onDelete: "cascade" }),
     imageId: serial("image_id")
       .notNull()
-      .references(() => images.id),
+      .references(() => images.id, { onDelete: "cascade" }),
     createdAt: timestamp("created_at", { withTimezone: true })
       .default(sql`CURRENT_TIMESTAMP`)
       .notNull(),
