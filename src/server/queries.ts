@@ -74,10 +74,30 @@ export async function addImageToAlbum(albumId: number, imageId: number) {
 
   if (!user.userId) throw new Error("Unauthorized");
 
-  await db.insert(albumImages).values({
-    albumId,
-    imageId,
+  const existingRecord = await db.query.albumImages.findFirst({
+    where: (model, { and, eq }) =>
+      and(eq(model.albumId, albumId), eq(model.imageId, imageId)),
   });
+
+  if (!existingRecord) {
+    await db.insert(albumImages).values({
+      albumId,
+      imageId,
+    });
+  }
+}
+
+export async function updateImageAlbum(imageId: number, newAlbumId: number) {
+  const user = auth();
+
+  if (!user.userId) throw new Error("Unauthorized");
+
+  await db
+    .update(albumImages)
+    .set({
+      albumId: newAlbumId,
+    })
+    .where(eq(albumImages.imageId, imageId));
 }
 
 export async function getAlbumImages(albumId: number) {

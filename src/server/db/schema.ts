@@ -56,6 +56,7 @@ export type GalleryAlbum = InferSelectModel<typeof albums>;
 export const albumImages = createTable(
   "album_image",
   {
+    id: serial("id").primaryKey(),
     albumId: serial("album_id")
       .notNull()
       .references(() => albums.id, { onDelete: "cascade" }),
