@@ -16,6 +16,7 @@ export async function GalleryPage() {
         </div>
       </SignedOut>
       <SignedIn>
+        <h1 className="w-full p-4 text-2xl font-semibold">All Images</h1>
         <ImageList images={images} albums={albums} />
       </SignedIn>
     </main>

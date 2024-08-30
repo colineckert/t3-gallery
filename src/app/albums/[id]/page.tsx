@@ -12,6 +12,14 @@ export default async function AlbumPage({
   }
   const images = await getAlbumImages(idAsNumber);
   const albums = await getMyAlbums();
+  const albumName = albums.find((album) => album.id === idAsNumber)?.name;
 
-  return <ImageList images={images} albums={albums} />;
+  return (
+    <>
+      <h1 className="w-full p-4 text-2xl font-semibold">
+        {albumName ?? "Album"}
+      </h1>
+      <ImageList images={images} albums={albums} />
+    </>
+  );
 }
